@@ -42,6 +42,7 @@
     "erela.js-facebook": "^1.0.4",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "genius-lyrics": "^4.4.3",
     "jsoning": "^0.12.0",
     "lavasfy": "2.3.0",
     "lodash": "^4.17.21",

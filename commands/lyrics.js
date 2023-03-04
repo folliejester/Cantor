@@ -1,6 +1,8 @@
 const { MessageEmbed } = require("discord.js");
 const { TrackUtils } = require("erela.js");
 const lyricsFinder = require("lyrics-finder");
+const Genius = require("genius-lyrics");
+const Client = new Genius.Client(client.botconfig.GeniusLyrics);
 const _ = require("lodash");
 
 module.exports = {
@@ -34,7 +36,9 @@ module.exports = {
       ""
     );
 
-    let lyrics = await lyricsFinder(SongTitle);
+    const searches = await Client.songs.search(SongTitle);
+    let lyrics = await searches[0].lyrics();
+    //let lyrics = await lyricsFinder(SongTitle);
     if (!lyrics)
       return client.sendTime(
         message.channel,
@@ -47,10 +51,8 @@ module.exports = {
       let em = new MessageEmbed()
         .setAuthor(`Lyrics for: ${SongTitle}`, client.botconfig.IconURL)
         .setColor(client.botconfig.EmbedColor)
-        .setDescription(ly.join("\n"));
-
-      if (args.join(" ") !== SongTitle)
-        em.setThumbnail(player.queue.current.displayThumbnail());
+        .setDescription(ly.join("\n"))
+        .setThumbnail(searches[0].thumbnail);
 
       return em;
     });
@@ -90,8 +92,9 @@ module.exports = {
       SongTitle = interaction.data.options
         ? interaction.data.options[0].value
         : player.queue.current.title;
-      let lyrics = await lyricsFinder(SongTitle);
-      console.log(lyrics.length === 0);
+      const searches = await Client.songs.search(SongTitle);
+    let lyrics = await searches[0].lyrics();
+        //let lyrics = await lyricsFinder(SongTitle);
       if (lyrics.length === 0)
         return client.sendTime(
           interaction,
@@ -104,15 +107,21 @@ module.exports = {
         let em = new MessageEmbed()
           .setAuthor(`Lyrics for: ${SongTitle}`, client.botconfig.IconURL)
           .setColor(client.botconfig.EmbedColor)
-          .setDescription(ly.join("\n"));
-
-        if (SongTitle !== SongTitle)
-          em.setThumbnail(player.queue.current.displayThumbnail());
+          .setDescription(ly.join("\n"))
+          .setThumbnail(searches[0].thumbnail);
 
         return em;
       });
       if (!Pages.length || Pages.length === 1)
         return interaction.send(Pages[0]);
+      let chann = client.channels.cache.get(interaction.channel_id)
+      chann.send("Fetching lyrics...")
+      .then( async m=>{
+        client.Pagination(m, Pages)
+        return await m.delete();
+      } )
+      return interaction.send("Powered by GeniusLyrics")
+      //This is the best I could do lmao sorry. Atleast it works.
     },
   },
 };

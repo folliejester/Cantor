@@ -33,15 +33,15 @@ module.exports = {
       .setFooter(
         `To get info of each command type ${
           GuildDB ? GuildDB.prefix : client.botconfig.DefaultPrefix
-        }help [Command] | Have a nice day!`
+        }help [Command] | Made with ❤ in 🇮🇳`
       ).setDescription(`${Commands.join("\n")}
   
-  Discord Music Bot Version: v${require("../package.json").version}
-  [✨ Support Server](${
+      Mr.Cantor#3045: powered by djs v12.5.3
+  [✨ Help and Support Server](${
     client.botconfig.SupportServer
-  }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | [Dashboard](${
+  }) | [GitHub](https://github.com/folliejester/Cantor) | [Dashboard](${
       client.botconfig.Website
-    }) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
+    }) | [Donate](https://ko-fi.com/folliejester)`);
     if (!args[0]) message.channel.send(Embed);
     else {
       let cmd =
@@ -122,12 +122,12 @@ module.exports = {
           }help [Command] | Have a nice day!`
         ).setDescription(`${Commands.join("\n")}
   
-  Discord Music Bot Version: v${require("../package.json").version}
-  [✨ Support Server](${
+  Mr.Cantor#3045: powered by djs v12.5.3
+  [✨ Help and Support Server](${
     client.botconfig.SupportServer
-  }) | [GitHub](https://github.com/SudhanPlayz/Discord-MusicBot) | [Dashboard](${
-        client.botconfig.Website
-      }) | By [SudhanPlayz](https://github.com/SudhanPlayz)`);
+  }) | [GitHub](https://github.com/folliejester/Cantor) | [Dashboard](${
+      client.botconfig.Website
+    }) | [Donate](https://ko-fi.com/folliejester)`);
       if (!args) return interaction.send(Embed);
       else {
         let cmd =
